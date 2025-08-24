@@ -6,6 +6,7 @@ namespace ConsoleApp22
     {
         static void Main(string[] args)
         {
+            //
             using var context = new Context();
 
             var partime = new PartTimeEmployee
