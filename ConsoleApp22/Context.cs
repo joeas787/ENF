@@ -7,6 +7,7 @@ namespace ConsoleApp22
         public DbSet<FullTimeEmployee> FullTimeEmployees { get; set; }
         public DbSet<PartTimeEmployee> partTimeEmployees { get; set; }
         public DbSet<Department> departments { get; set; }
+        public DbSet<EmployeeDepartment> employeeDepartments { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder./*UseLazyLoadingProxies().*/UseSqlServer("server =. ; database = IT ; Trusted_Connection = true ; TrustServerCertificate = true");
@@ -17,6 +18,9 @@ namespace ConsoleApp22
             modelBuilder.Entity<FullTimeEmployee>().HasBaseType<Employee>().HasDiscriminator<string>("EmployeeType").HasValue<FullTimeEmployee>("FTE");
 
             modelBuilder.Entity<PartTimeEmployee>().HasBaseType<Employee>().HasDiscriminator<string>("EmployeeType").HasValue<PartTimeEmployee>("PTE");
+
+
+            modelBuilder.Entity<EmployeeDepartment>().HasNoKey().ToView("EmployeeDepartmentView");
         }
     }
 }
