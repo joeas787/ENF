@@ -8,7 +8,7 @@ namespace ConsoleApp22
         {
             //
             using var context = new Context();
-
+            #region past
             var partime = new PartTimeEmployee
             {
                 Name = "joe",
@@ -117,6 +117,36 @@ namespace ConsoleApp22
 
             }
             empl = context.Employees.Find(1);
+            #endregion
+            var r1 = from Employee in context.Employees
+                     join Department in context.departments on Employee.DepartmentId equals Department.Id
+                     select new
+                     {
+
+                         Employee.Name,
+                         depname = Department.Name
+                     };
+            var r2 = context.departments.Join(context.Employees, d => d.Id,
+                e => e.DepartmentId,
+                (d, e) => new
+                {
+
+                    e.Name,
+                    depname = d.Name
+                
+                }
+                
+                );
+
+
+            var r3 = context.departments.GroupJoin(context.Employees, d => d.Id,
+               e => e.DepartmentId,
+               (d, e) => new
+               {
+
+                   e,
+                    d
+               });
         }
     }
 }
